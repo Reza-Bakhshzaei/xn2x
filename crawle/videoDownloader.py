@@ -1,7 +1,7 @@
 import requests, re, os
 from pym3u8downloader import M3U8Downloader
 
-def download_video_from_link(url):
+async def download_video_from_link(url):
     name = url.split("/")[-1]+".mp4"
     if name not in os.listdir():
         response = requests.get(url).text
