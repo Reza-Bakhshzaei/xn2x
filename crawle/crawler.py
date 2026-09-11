@@ -21,4 +21,5 @@ async def get_results(query):
                 input_message_content=InputTextMessageContent("title: [{}]({})\nMetaData: {}".format(row.a['href'].split("/")[-1].replace("_", " ") if row.a['href'].split("/")[-1].replace("_", " ") != " " else "No Title", base_url+row.a['href'], " - ".join(col.text.split())), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
             ))
         else:break
+    print(results)
     return results
