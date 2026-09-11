@@ -22,10 +22,6 @@ async def answer(client, inline_query):
         )
 
 
-async def progress(c, current, total):
-    print(f"{current * 100 / total:.1f}%")
-
-
 @app.on_message()
 async def videoDownload(c, m):
     if m.entities:
@@ -33,7 +29,8 @@ async def videoDownload(c, m):
             name = await download_video_from_link(m.entities[len(m.entities)-1].url)
             print("Ended Download!!!!!! \nby name: {}".format(name))
             # await c.send_video(m.chat.id, name)
-            await c.send_document(chat_id= m.chat.id, document= name, caption= m.text, progress=progress(c=c))
+            await m.reply("Start Upload!!!!!!")
+            await c.send_document(chat_id= m.chat.id, document= name, caption= m.text)
             os.remove(name)
     else:
         await m.reply("not found command")
