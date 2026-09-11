@@ -18,7 +18,7 @@ async def get_results(query):
                 thumb_url=row.a.img['data-src'],
                 description="Meta Data: {}".format("-".join(col.text.split())),
                 title=row.a['href'].split("/")[-1].replace("_", " ") if row.a['href'].split("/")[-1].replace("_", " ") != " " else "No Title",
-                input_message_content=InputTextMessageContent("title: [{}]({})\nMetaData: {}".format(row.a['href'].split("/")[-1].replace("_", " ") if row.a['href'].split("/")[-1].replace("_", " ") != " " else "No Title", base_url+row.a['href'], " - ".join(col.text.split())), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
+                input_message_content=InputTextMessageContent("[{}]({})\n{}".format(row.a['href'].split("/")[-1].replace("_", " ") if row.a['href'].split("/")[-1].replace("_", " ") != " " else "No Title", base_url+row.a['href'], " - ".join(col.text.split())), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
             ))
         else:break
     return results

@@ -26,11 +26,15 @@ async def answer(client, inline_query):
 async def videoDownload(c, m):
     if m.entities:
         if m.entities[len(m.entities)-1].url:
+            r = await m.reply("Start Download!!!!!!")
             name = await download_video_from_link(m.entities[len(m.entities)-1].url)
-            print("Ended Download!!!!!! \nby name: {}".format(name))
+            await r.delete()
+            d = await m.reply("Ended Download!!!!!! \nby name: {}".format(name))
             # await c.send_video(m.chat.id, name)
-            await m.reply("Start Upload!!!!!!")
+            f = await m.reply("Start Upload!!!!!!")
             await c.send_document(chat_id= m.chat.id, document= name, caption= m.text)
+            await d.delete()
+            await f.delete()
             os.remove(name)
     else:
         await m.reply("not found command")
