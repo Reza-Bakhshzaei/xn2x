@@ -20,5 +20,6 @@ def download_video_from_link(url):
             input_file_path=link,
             output_file_path=name
         )
+        downloader.download_playlist()
         return name
     else:return name
