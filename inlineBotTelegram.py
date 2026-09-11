@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 from crawle.crawler import get_results
 from crawle.videoDownloader import download_video_from_link
+from pyrogram import enums
 import os
 proxi = {
     "scheme": "socks5",
@@ -21,12 +22,22 @@ async def answer(client, inline_query):
             cache_time=1
         )
 
+
+async def progress(current, total):
+    print(f"{current * 100 / total:.1f}%")
+
+
 @app.on_message()
 async def videoDownload(c, m):
+    print(m)
     if m.entities:
         if m.entities[len(m.entities)-1].url:
             name = download_video_from_link(m.entities[len(m.entities)-1].url)
-            await c.send_video(m.chat.id, name)
+            print("Ended Download!!!!!! \nby name: {}".format(name))
+            await c.send_chat_action(m.chat.id, enums.ChatAction.UPLOAD_VIDEO)
+            # await c.send_video(m.chat.id, name)
+            await app.send_document(chat_id= m.chat.id,document= name, caption= m.text, progress=progress)
+            await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
             os.remove(name)
     else:
         await m.reply("not found command")
